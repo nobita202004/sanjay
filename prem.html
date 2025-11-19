@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Small HTML File</title>
+  <style>
+    :root{--bg:#f7f7fc;--card:#fff;--fg:#111}
+    [data-theme="dark"]{--bg:#0f1724;--card:#0b1220;--fg:#e6eef8}
+    html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial}
+    body{background:linear-gradient(180deg,var(--bg),#e9eef8);color:var(--fg);display:flex;align-items:center;justify-content:center;padding:2rem}
+    .card{background:var(--card);border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.12);padding:1.25rem;max-width:520px;width:100%}
+    h1{margin:0 0 0.25rem 0;font-size:1.25rem}
+    p{margin:0 0 1rem 0;color:inherit;opacity:0.9}
+    .row{display:flex;gap:0.5rem}
+    button{padding:0.5rem 0.75rem;border-radius:8px;border:0;background:#2563eb;color:#fff;cursor:pointer}
+    input[type=text]{flex:1;padding:0.45rem 0.5rem;border-radius:8px;border:1px solid #dae3f7}
+    footer{margin-top:1rem;font-size:0.85rem;color:inherit;opacity:0.8}
+  </style>
+</head>
+<body>
+  <main class="card" id="app">
+    <h1>Tiny HTML demo</h1>
+    <p>Type something and click <strong>Greet</strong>. Toggle theme with <strong>Dark</strong>.</p>
+
+    <div class="row" style="margin-bottom:0.75rem;">
+      <input id="name" type="text" placeholder="Your name" />
+      <button id="greet">Greet</button>
+      <button id="theme">Dark</button>
+    </div>
+
+    <div id="message" aria-live="polite"></div>
+
+    <footer>
+      <small>Made with ✨ — single-file, no libraries.</small>
+    </footer>
+  </main>
+
+  <script>
+    const nameIn = document.getElementById('name');
+    const greetBtn = document.getElementById('greet');
+    const themeBtn = document.getElementById('theme');
+    const msg = document.getElementById('message');
+
+    greetBtn.addEventListener('click', ()=>{
+      const n = nameIn.value.trim() || 'Friend';
+      msg.textContent = `Hello, ${n}! Nice to meet you.`;
+    });
+
+    themeBtn.addEventListener('click', ()=>{
+      const el = document.documentElement;
+      if(el.getAttribute('data-theme') === 'dark'){
+        el.removeAttribute('data-theme');
+        themeBtn.textContent = 'Dark';
+      } else {
+        el.setAttribute('data-theme','dark');
+        themeBtn.textContent = 'Light';
+      }
+    });
+
+    // small accessibility nicety: press Enter to greet
+    nameIn.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') greetBtn.click(); });
+  </script>
+</body>
+</html>
